@@ -1,48 +1,38 @@
 pipeline {
-  agent any
-  stages {
-    stage('Checkout') {
-      steps {
-        checkout scm
-      }
-    }
-
-    stage('Client Tests') {
-      steps {
-        dir(path: 'client') {
-          bat 'npm install'
-          bat 'npm test'
+    agent any
+    
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building the project...'
+                // Ajoutez ici les étapes de construction de votre projet
+            }
         }
-
-      }
-    }
-
-    stage('Server Tests') {
-      steps {
-        dir(path: 'server') {
-          sh 'npm install'
-          sh 'export MONGODB_URI=$MONGODB_URI'
-          sh 'export TOKEN_KEY=$TOKEN_KEY'
-          sh 'export EMAIL=$EMAIL'
-          sh 'export PASSWORD=$PASSWORD'
-          sh 'npm test'
+        
+        stage('Test') {
+            steps {
+                echo 'Running tests...'
+                // Ajoutez ici les étapes pour exécuter les tests de votre projet
+            }
         }
-
-      }
+        
+        stage('Deploy') {
+            steps {
+                echo 'Deploying the project...'
+                // Ajoutez ici les étapes pour déployer votre projet
+            }
+        }
     }
-
-    stage('Build Images') {
-      steps {
-        sh 'docker build -t rakeshpotnuru/productivity-app:client-latest client'
-        sh 'docker build -t rakeshpotnuru/productivity-app:server-latest server'
-      }
+    
+    post {
+        success {
+            echo 'Pipeline executed successfully!'
+            // Ajoutez ici les étapes à exécuter en cas de réussite de la pipeline
+        }
+        
+        failure {
+            echo 'Pipeline failed!'
+            // Ajoutez ici les étapes à exécuter en cas d'échec de la pipeline
+        }
     }
-
-  }
-  environment {
-    MONGODB_URI = credentials('mongodb-uri')
-    TOKEN_KEY = credentials('token-key')
-    EMAIL = credentials('email')
-    PASSWORD = credentials('password')
-  }
 }
