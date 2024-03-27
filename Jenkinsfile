@@ -9,7 +9,6 @@ pipeline {
         EMAIL = credentials('email')
         PASSWORD = credentials('password')
     }
-
     // This is the pipeline. It is a series of stages that Jenkins will run.
     stages {
         // This state is telling Jenkins to checkout the source code from the source control management system.
