@@ -23,8 +23,8 @@ pipeline {
         stage('Client Tests') {
             steps {
                 dir('client') {
-                    sh 'npm install'
-                    sh 'npm test'
+                    bat 'npm install'
+                    bat 'npm test'
                 }
             }
         }
