@@ -6,6 +6,19 @@ pipeline {
         echo 'bonjour'
       }
     }
+    stage('Checkout1') {
+			steps {
+				checkout scm
+			}
+		}
+    stage('test') {
+			steps {
+				dir('client'){
+			sh 'npm install'
+			sh 'npm test'
+		}
+			}
+		}
 
   }
 }
